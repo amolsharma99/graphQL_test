@@ -10,15 +10,19 @@ class Friend{
     }
 }
 
-const resolvers = { getFriend: ({id}) => {
-    return new Friend(id, friendDataBase[id])
+//resolver map
+export const resolvers = { 
+    Query: {
+        getFriend: ({id}) => {
+            return new Friend(id, friendDataBase[id])
+            },
+
     },
-    createFriend : ({input}) =>{
-        let id = require('crypto').randomBytes(10).toString('hex');
-        friendDataBase[id] = input;
-        return Friend(id, input)
+    Mutation: {
+        createFriend : ({input}) =>{
+            let id = require('crypto').randomBytes(10).toString('hex');
+            friendDataBase[id] = input;
+            return new Friend(id, input)
+        },
     }
 };
-
-
-export default resolvers;
