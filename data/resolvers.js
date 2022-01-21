@@ -3,10 +3,14 @@ import { Friends } from "./dbConnectors";
 //resolver map
 export const resolvers = { 
     Query: {
-        getFriend: ({id}) => {
-            return new Friends(id, friendDataBase[id])
-            },
-
+        getOneFriend:(root, {id}) => {
+            return new Promise((resolve, object) => {
+                Friends.findById(id, (err, friend) => {
+                    if(err) reject(err)
+                    else resolve(friend)
+                })
+            })
+        }
     },
     Mutation: {
         createFriend : (root, {input}) => {
